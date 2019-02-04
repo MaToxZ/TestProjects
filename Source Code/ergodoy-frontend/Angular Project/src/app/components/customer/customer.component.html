@@ -1,0 +1,104 @@
+<div class="card">
+  <h5 class="card-header">Clientes</h5>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md">
+        <h5 class="card-title">Listado de Clientes</h5>
+      </div>
+      <div class="col-md text-right">
+        <p-button (onClick)="createCustomerFormGroup()" styleClass="ui-button-rounded ui-button-success" label="Agregar" icon="pi pi-user-plus"
+          iconPos="left"></p-button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <p-table [value]="customers">
+          <ng-template pTemplate="header">
+            <tr class="table-dark">
+              <th *ngFor="let col of tableCols" class="tables-th-style">
+                {{col.header}}
+              </th>
+              <th class="tables-th-style">
+                Acciones
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-customer>
+            <tr class="clickable-table-row">
+              <td (click)="selectCustomer(customer)" *ngFor="let col of tableCols">
+                {{customer[col.field]}}
+              </td>
+              <td>
+                <div class="row">
+                  <div class="col-sm text-center">
+                    <p-button styleClass="ui-button-rounded ui-button-warning" label="" icon="pi pi-pencil" iconPos="left" (onClick)="editCustomer(customer)"></p-button>
+                  </div>
+                  <div class="col-sm text-center">
+                    <p-button styleClass="ui-button-rounded ui-button-danger" label="" icon="pi pi-trash" iconPos="left" (onClick)="deleteCustomer(customer)"></p-button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <br>
+    <div class="row" *ngIf="showing === 'addCustomer' || showing === 'editCustomer'">
+      <div class="col-md">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-md">
+              <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label for="customerName">Nombre</label>
+                      <input type="text" class="form-control" id="cName" formControlName="cName" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerAddress">Dirección</label>
+                      <input type="text" class="form-control" id="customerAddress" placeholder="Calle 15 #34 - 56" formControlName="cAddress" maxlength="100">
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="customerForm.controls.cName.errors ||  customerForm.controls.cAddress.errors || customerForm.controls.cCity.errors || customerForm.controls.cPhone.errors">
+                      Todos los campos son requeridos
+                    </div>
+                  </div>
+
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label for="customerCity">Ciudad</label>
+                      <input type="text" class="form-control" id="customerCity" placeholder="Bogota" formControlName="cCity" maxlength="30">
+                    </div>
+                    <div class="form-group">
+                      <label for="customerPhone">Teléfono</label>
+                      <input type="text" class="form-control" id="customerPhone" placeholder="3000000000" formControlName="cPhone" maxlength="20">
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="!customerForm.controls.cPhone.valid && customerForm.controls.cPhone.dirty">
+                        El campo teléfono solo se aceptan caracteres numericos.
+                      </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md text-right">
+                    <button type="button" class="btn btn-primary" [disabled]="!customerForm.valid" (click)="onSubmit()">Guardar</button>
+                    <button type="button" class="btn btn-light" (click)="showing = 'none'">Cancelar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row" *ngIf="showing === 'cards'">
+      <div class="col-md">
+        <app-card [customer]="customerSelected"></app-card>
+      </div>
+    </div>
+    <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a> -->
+  </div>
+</div>

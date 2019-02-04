@@ -1,0 +1,35 @@
+<ngx-spinner bdOpacity="0 .5" bdColor="rgba(51,51,51,0.48)" size="large" color="#fff" type="square-loader" fullScreen="true">
+  <p style="color: white"> Cargando.. Espere un momento </p>
+</ngx-spinner>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md navbar-dark bg-primary">
+      <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <a class="navbar-brand" href="#">
+            <img src="assets/IBM_Edited_Logo.png">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" [routerLink]="['/customer']" (click)="selectMenu('customer')" [class.active]="selectedMenu === 'customer'">Clientes</a>
+              <a class="nav-item nav-link" [routerLink]="['/consumption']" (click)="selectMenu('consumption')" [class.active]="selectedMenu === 'consumption'">Historial de Consumos</a>
+              <a class="nav-item nav-link" [routerLink]="['/adviser']" (click)="selectMenu('adviser')" [class.active]="selectedMenu === 'adviser'">Asesores</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="container">
+      <div class="col-md">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
